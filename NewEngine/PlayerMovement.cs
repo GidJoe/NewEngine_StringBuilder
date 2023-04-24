@@ -9,16 +9,14 @@ namespace NewEngine
     
     internal class PlayerMovement
     {
-        public static int posPlayerX = 5;
-        public static int posPlayerY = 5;
-
-        public int test1, test2;
-
-
+        public static int posPlayerX = 18;
+        public static int posPlayerY = 18;
+        public static string checker = "";
+        private bool canMove;
 
 
 
-
+        
         public char player()
         {
             char player = 'o';
@@ -29,7 +27,51 @@ namespace NewEngine
         {
 
 
-            MapBuilder.mainmap[1, 5] = player();
+            Maps.mainmap[1, 5] = player();
+        }
+
+        //bool und string
+        public static bool nextPositionChecker(string whatToCheck)
+        {
+            Map2 anewmap = new Map2();
+            switch (whatToCheck)
+            {
+                case "up":
+                    if (anewmap.mainmap[PlayerMovement.posPlayerX - 1, PlayerMovement.posPlayerY] == ' ')
+                    {
+                        return true;
+
+                    }
+
+                    break;
+                case "down":
+                    if (anewmap.mainmap[PlayerMovement.posPlayerX + 1, PlayerMovement.posPlayerY] == ' ')
+                    {
+                        return true;
+
+                    }
+                    break;
+                case "left":
+                    if (anewmap.mainmap[PlayerMovement.posPlayerX, PlayerMovement.posPlayerY + 1] == ' ')
+                    {
+                        return true;
+
+                    }
+                    break;
+                case "right":
+                    if (anewmap.mainmap[PlayerMovement.posPlayerX, PlayerMovement.posPlayerY - 1] == ' ')
+                    {
+                        return true;
+
+                    }
+                    break;
+                default:
+                    return false;
+
+
+            }
+
+            return false;
         }
 
 
@@ -38,24 +80,54 @@ namespace NewEngine
 
         public static void movement()
         {
-            Console.SetCursorPosition(0, 0);
-            ConsoleKey key1 = Console.ReadKey(true).Key;
+            //Console.SetCursorPosition(0, 0);
+            ConsoleKey keyinput = Console.ReadKey(true).Key;
 
-            if (key1 == ConsoleKey.W)
+            if (keyinput == ConsoleKey.W)
             {
+                if (nextPositionChecker("up") == true)
+                {
+                    posPlayerX--;
+                }
+                else
+                {
+                    //do nothing
+                }
+
+            } else if (keyinput == ConsoleKey.S)
+            {
+                if (nextPositionChecker("down") == true)
+                {
+                    posPlayerX++;
                 
-                posPlayerX--;
-                
-            } else if (key1 == ConsoleKey.S)
+                }
+                else
+                {
+                    //do nothing
+                }
+            } else if (keyinput == ConsoleKey.A)
             {
-                posPlayerX++;
-            } else if (key1 == ConsoleKey.A)
-            {
-                posPlayerY--;
+                if (nextPositionChecker("right") == true)
+                {
+                    posPlayerY--;
+                }
+                else
+                {
+                    //do nothing
+                }
             }
-            else if (key1 == ConsoleKey.D)
+            else if (keyinput == ConsoleKey.D)
             {
-                posPlayerY++;
+                if (nextPositionChecker("left") == true)
+                {
+                    posPlayerY++;
+                    
+
+                }
+                else
+                {
+                    //do nothing
+                }
             }
         }
     }
